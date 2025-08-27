@@ -26,9 +26,11 @@
 		<tag/>
 		<url/>
 	</scm>
+	
 	<properties>
 		<java.version>17</java.version>
 	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -62,6 +64,29 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+			<exclusions>
+		    	<exclusion>
+		    		<!-- Esclude Junit5 -->
+		    		<groupId>org.junit.jupiter</groupId>
+		    		<artifactId>junit-jupiter</artifactId>
+		  		</exclusion>
+		    	<exclusion>
+		    		<!-- Esclude Pitest Junit5 -->
+		    		<groupId>org.mockito</groupId>
+		    		<artifactId>mockito-junit-jupiter</artifactId>
+		    	</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.vintage</groupId>
+			<artifactId>junit-vintage-engine</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.hamcrest</groupId>
+					<artifactId>hamcrest-core</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 
