@@ -105,6 +105,80 @@
 					<artifactId>maven-site-plugin</artifactId>
 					<version>3.21.0</version>
 				</plugin>
+				<plugin>
+					<groupId>org.jacoco</groupId>
+					<artifactId>jacoco-maven-plugin</artifactId>
+					<version>0.8.13</version>
+					<executions>				        	
+			        	<execution>
+			            <goals>
+			            	<!-- Attiva l’agent per raccogliere i dati, di default phase "initialize" -->
+			            	<goal>prepare-agent</goal>
+			            	<!-- Genera il report HTML, di default phase "verify" -->
+			            	<goal>report</goal>
+			            </goals>
+			        	</execution>
+			        	<execution>
+			            <id>jacoco-check</id>
+			            <goals>
+			            	<!-- Check, di default phase "verify" -->
+			            	<goal>check</goal>
+			            </goals>
+			            <configuration>
+				            <rules>
+								<rule>
+							    	<element>BUNDLE</element>
+									<limits>
+										<limit>
+										    <counter>LINE</counter>
+										    <value>COVEREDRATIO</value>
+										    <minimum>0.70</minimum>
+										</limit>
+									</limits>
+								</rule>
+							</rules>
+						</configuration>
+			        	</execution>
+			        </executions>
+				</plugin>
+				<plugin>
+					<groupId>org.pitest</groupId>
+					<artifactId>pitest-maven</artifactId>
+					<version>1.15.0</version>
+					<configuration>
+						<targetClasses>
+				 			<param>com.library.librarymanager.User*</param>
+				 		</targetClasses>
+				 		<targetTests>
+				 			<param>com.library.librarymanager.*</param>
+				 		</targetTests>
+				 		<mutators>
+				 		<mutator>STRONGER</mutator>
+				 		</mutators>
+						<mutationThreshold>90</mutationThreshold>
+					</configuration>
+					<executions>
+						<execution>
+							<goals>
+								<goal>mutationCoverage</goal>
+							</goals>
+							<phase>verify</phase>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.eluder.coveralls</groupId>
+					<artifactId>coveralls-maven-plugin</artifactId>
+					<version>4.3.0</version>
+					<dependencies>
+					<!-- Richiesto perché uso JDK 17 e javax.xml.bind è stato rimosso dalla versione 9 o superiori -->
+					<dependency>
+						<groupId>javax.xml.bind</groupId>
+						<artifactId>jaxb-api</artifactId>
+						<version>2.3.1</version>
+					</dependency>
+					</dependencies>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
