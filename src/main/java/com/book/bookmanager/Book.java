@@ -3,15 +3,18 @@ package com.book.bookmanager;
 import java.util.Objects;
 
 public class Book {
-	
+
 	private Long id;
 	private String title;
+	private String author;
 	private String category;
 	private long price;
 	
-	public Book(Long id, String title, String category, long price) {
+	public Book(Long id, String title, String author, String category, long price) {
+		super();
 		this.id = id;
 		this.title = title;
+		this.author = author;
 		this.category = category;
 		this.price = price;
 	}
@@ -32,6 +35,14 @@ public class Book {
 		this.title = title;
 	}
 
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+	
 	public String getCategory() {
 		return category;
 	}
@@ -50,12 +61,13 @@ public class Book {
 
 	@Override
 	public String toString() {
-		return "Book [id=" + id + ", title=" + title + ", category=" + category + ", price=" + price + "]";
+		return "Book [id=" + id + ", title=" + title + ", author=" + author + ", category=" + category + ", price="
+				+ price + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(category, id, price, title);
+		return Objects.hash(author, category, id, price, title);
 	}
 
 	@Override
@@ -67,7 +79,7 @@ public class Book {
 		if (getClass() != obj.getClass())
 			return false;
 		Book other = (Book) obj;
-		return Objects.equals(category, other.category) && Objects.equals(id, other.id) && price == other.price
-				&& Objects.equals(title, other.title);
+		return Objects.equals(author, other.author) && Objects.equals(category, other.category)
+				&& Objects.equals(id, other.id) && price == other.price && Objects.equals(title, other.title);
 	}
 }
