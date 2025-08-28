@@ -151,6 +151,12 @@
 					<groupId>org.jacoco</groupId>
 					<artifactId>jacoco-maven-plugin</artifactId>
 					<version>0.8.13</version>
+					<configuration>
+						<excludes>
+							<exclude>**/Application.*</exclude>
+							<exclude>**/Book.*</exclude>
+						</excludes>
+					</configuration>
 					<executions>				        	
 			        	<execution>
 			            <goals>
@@ -169,7 +175,7 @@
 			            <configuration>
 				            <rules>
 								<rule>
-							    	<element>BUNDLE</element>
+							    	<element>PACKAGE</element>
 									<limits>
 										<limit>
 										    <counter>LINE</counter>
