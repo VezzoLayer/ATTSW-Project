@@ -104,6 +104,7 @@
 						<configuration>
 							<sources>
 								<source>src/it/test</source>
+								<source>src/e2e/java</source>
 								<source>src/bdd/java</source>
 							</sources>
 						</configuration>
@@ -138,6 +139,7 @@
 				<artifactId>maven-failsafe-plugin</artifactId>
 				<executions>
 					<execution>
+					<id>default-it</id>
 						<configuration>
 							<includes>
 								<include>**/*ApplicationTests.java</include>
@@ -148,6 +150,38 @@
 							<goal>integration-test</goal>
 							<goal>verify</goal>
 						</goals>
+					</execution>
+					<execution>
+						<id>e2e-tests</id>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+						<configuration>
+							<excludes>
+								<include>**/*ApplicationTests.java</include>
+								<exclude>**/*IT.java</exclude>
+							</excludes>
+							<includes>
+								<include>**/*E2E.java</include>
+							</includes>
+						</configuration>
+					</execution>
+					<execution>
+						<id>bdd-tests</id>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+						<configuration>
+							<excludes>
+								<include>**/*ApplicationTests.java</include>
+								<exclude>**/*IT.java</exclude>
+							</excludes>
+							<includes>
+								<include>**/*BDD.java</include>
+							</includes>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
