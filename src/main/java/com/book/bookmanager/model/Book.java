@@ -1,17 +1,27 @@
-package com.book.bookmanager;
+package com.book.bookmanager.model;
 
 import java.util.Objects;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
+
+@Entity
 public class Book {
 
+	@Id @GeneratedValue
 	private Long id;
 	private String title;
 	private String author;
 	private String category;
 	private long price;
 	
+	public Book() {
+		// required for serialization/deserialization
+	}
+	
 	public Book(Long id, String title, String author, String category, long price) {
-		super();
 		this.id = id;
 		this.title = title;
 		this.author = author;
