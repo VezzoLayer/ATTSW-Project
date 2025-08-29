@@ -3,6 +3,7 @@ package com.book.bookmanager.repositories;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,8 +34,16 @@ public class BookRepositoryTest {
 
 	@Test
 	public void testFindByBookTitle() {
-		Book bookSaved = entityManager.persistFlushFind(new Book(null, "test", "test", "test", 20));
-		Book found = repository.findByTitle("test");
-		assertThat(found).isEqualTo(bookSaved);
+		Book bookShouldBeFound = entityManager.persistFlushFind(new Book(null, "test", "test", "test", 20));
+		Book bookFound = repository.findByTitle("test");
+		assertThat(bookFound).isEqualTo(bookShouldBeFound);
+	}
+
+	@Test
+	public void testFindByTitleAndPrice() {
+		entityManager.persistFlushFind(new Book(null, "test", "test", "test", 10));
+		Book bookShouldBeFound = entityManager.persistFlushFind(new Book(null, "test", "test", "test", 20));
+		List<Book> bookFound = repository.findByTitleAndPrice("test", 20L);
+		assertThat(bookFound).containsExactly(bookShouldBeFound);
 	}
 }
