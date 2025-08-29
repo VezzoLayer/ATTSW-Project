@@ -50,9 +50,18 @@ public class BookRepositoryTest {
 	@Test
 	public void testFindByTitleOrPrice() {
 		Book book1 = entityManager.persistFlushFind(new Book(null, "test", "test", "test", 10));
-		Book book2 = entityManager.persistFlushFind(new Book(null, "Another Book", "test", "test", 20l));
+		Book book2 = entityManager.persistFlushFind(new Book(null, "Another Book", "test", "test", 20));
 		entityManager.persistFlushFind(new Book(null, "Should Not Be Found", "test", "test", 10));
-		List<Book> found = repository.findByTitleOrPrice("test", 20l);
+		List<Book> found = repository.findByTitleOrPrice("test", 20L);
+		assertThat(found).containsExactly(book1, book2);
+	}
+
+	@Test
+	public void testFindAllBooksWithLowPrice() {
+		Book book1 = entityManager.persistFlushFind(new Book(null, "test", "test", "test", 10));
+		Book book2 = entityManager.persistFlushFind(new Book(null, "Another Book", "test", "test", 20));
+		entityManager.persistFlushFind(new Book(null, "Should Not Be Found", "test", "test", 30));
+		List<Book> found = repository.findAllBooksWithLowPrice(25L);
 		assertThat(found).containsExactly(book1, book2);
 	}
 }
