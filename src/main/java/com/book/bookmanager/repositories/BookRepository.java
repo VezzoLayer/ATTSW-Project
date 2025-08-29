@@ -11,6 +11,8 @@ import com.book.bookmanager.model.Book;
 public interface BookRepository extends JpaRepository<Book, Long>{
 
 	Book findByTitle(String title);
+	
+	Book findByCategory(String category);
 
 	List<Book> findByTitleAndPrice(String title, long price);
 
@@ -18,5 +20,6 @@ public interface BookRepository extends JpaRepository<Book, Long>{
 	
 	@Query("Select b from Book b where b.price < :threshold")
 	List<Book> findAllBooksWithLowPrice(@Param("threshold") long threshold);
+	
 	
 }

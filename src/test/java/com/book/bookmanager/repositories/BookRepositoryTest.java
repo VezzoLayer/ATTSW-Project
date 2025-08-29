@@ -38,6 +38,13 @@ public class BookRepositoryTest {
 		Book bookFound = repository.findByTitle("test");
 		assertThat(bookFound).isEqualTo(bookShouldBeFound);
 	}
+	
+	@Test
+	public void testFindByBookCategory() {
+		Book bookShouldBeFound = entityManager.persistFlushFind(new Book(null, "test", "test", "test", 20));
+		Book bookFound = repository.findByCategory("test");
+		assertThat(bookFound).isEqualTo(bookShouldBeFound);
+	}
 
 	@Test
 	public void testFindByTitleAndPrice() {
