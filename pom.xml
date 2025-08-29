@@ -103,7 +103,7 @@
 						</goals>
 						<configuration>
 							<sources>
-								<source>src/it/test</source>
+								<source>src/it/java</source>
 								<source>src/e2e/java</source>
 								<source>src/bdd/java</source>
 							</sources>
