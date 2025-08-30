@@ -103,7 +103,7 @@
 						</goals>
 						<configuration>
 							<sources>
-								<source>src/it/test</source>
+								<source>src/it/java</source>
 								<source>src/e2e/java</source>
 								<source>src/bdd/java</source>
 							</sources>
@@ -229,7 +229,7 @@
 										<limit>
 										    <counter>LINE</counter>
 										    <value>COVEREDRATIO</value>
-										    <minimum>0.00</minimum>
+										    <minimum>1.00</minimum>
 										</limit>
 									</limits>
 								</rule>
@@ -244,13 +244,14 @@
 					<version>1.15.0</version>
 					<configuration>
 						<targetClasses>
-				 			<param>com.library.librarymanager.User*</param>
-				 		</targetClasses>
-				 		<targetTests>
-				 			<param>com.library.librarymanager.*</param>
-				 		</targetTests>
+							<param>com.book.bookmanager.repositories*</param>
+						</targetClasses>
+						<targetTests>
+							<param>com.book.bookmanager.repositories*</param>
+							<param>com.book.bookmanager.jpa*</param>
+						</targetTests>
 				 		<mutators>
-				 		<mutator>STRONGER</mutator>
+				 			<mutator>STRONGER</mutator>
 				 		</mutators>
 						<mutationThreshold>90</mutationThreshold>
 					</configuration>
