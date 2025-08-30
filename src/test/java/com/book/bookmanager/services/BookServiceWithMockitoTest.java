@@ -2,6 +2,7 @@ package com.book.bookmanager.services;
 
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
@@ -37,5 +38,11 @@ public class BookServiceWithMockitoTest {
 		Book book = new Book(1L, "test", "test", "test", 10);
 		when(bookRepository.findById(1L)).thenReturn(Optional.of(book));
 		assertThat(bookService.getBookById(1)).isSameAs(book);
+	}
+	
+	@Test
+	public void testGetBookByIdNotFound() {
+		when(bookRepository.findById(anyLong())).thenReturn(Optional.empty());
+		assertThat(bookService.getBookById(1)).isNull();
 	}
 }
