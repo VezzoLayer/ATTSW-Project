@@ -52,15 +52,31 @@ public class BookServiceWithMockitoTest {
 	public void testInsertNewBookShouldSetIdToNullAndReturnsSavedBook() {
 		Book toSave = spy(new Book(50L, "tosave", "test", "test", 10));
 		Book saved = new Book(1L, "saved", "test", "test", 20);
-		
+
 		when(bookRepository.save(any(Book.class))).thenReturn(saved);
-		
+
 		Book result = bookService.insertNewBook(toSave);
-		
+
 		assertThat(result).isSameAs(saved);
-		
+
 		InOrder inOrder = inOrder(toSave, bookRepository);
 		inOrder.verify(toSave).setId(null);
 		inOrder.verify(bookRepository).save(toSave);
+	}
+
+	@Test
+	public void testUpdateBookByIdSetsIdToArgumentAndReturnsSavedBook() {
+		Book replacement = spy(new Book(null, "replacement book", "author", "category", 10));
+		Book replaced = new Book(1L, "saved book", "author", "category", 20);
+		
+		when(bookRepository.save(any(Book.class))).thenReturn(replaced);
+		
+		Book result = bookService.updateEmployeeById(1L, replacement);
+		
+		assertThat(result).isSameAs(replaced);
+		
+		InOrder inOrder = inOrder(replacement, bookRepository);
+		inOrder.verify(replacement).setId(1L);
+		inOrder.verify(bookRepository).save(replacement);
 	}
 }
