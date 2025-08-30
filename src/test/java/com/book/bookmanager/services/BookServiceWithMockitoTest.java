@@ -4,6 +4,8 @@ import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
+import java.util.Optional;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -28,5 +30,12 @@ public class BookServiceWithMockitoTest {
 		Book book2 = new Book(2L, "second book", "test", "test", 20);
 		when(bookRepository.findAll()).thenReturn(asList(book1, book2));
 		assertThat(bookService.getAllBooks()).containsExactly(book1, book2);
+	}
+
+	@Test
+	public void testGetBookByIdCorrectlyFound() {
+		Book book = new Book(1L, "test", "test", "test", 10);
+		when(bookRepository.findById(1L)).thenReturn(Optional.of(book));
+		assertThat(bookService.getBookById(1)).isSameAs(book);
 	}
 }
