@@ -11,7 +11,7 @@ import com.book.bookmanager.model.Book;
 @RestController
 public class BookRestController {
 
-	@GetMapping("/api/employees")
+	@GetMapping("/api/books")
 	public List<Book> allBooks() {
 		return Collections.emptyList();
 	}
