@@ -30,6 +30,6 @@ public class BookJpaTest {
 		assertThat(saved.getId()).isPositive();
 
 		// Per vedere identifier generato
-		LoggerFactory.getLogger(BookJpaTest.class).info("Saved: {}", saved.toString());
+		LoggerFactory.getLogger(BookJpaTest.class).info("Saved: {}", saved);
 	}
 }

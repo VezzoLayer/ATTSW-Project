@@ -207,7 +207,7 @@
 					<configuration>
 						<excludes>
 							<exclude>**/*Application.*</exclude>
-							<exclude>**/Book.*</exclude>
+							<exclude>**/model/*</exclude>
 						</excludes>
 					</configuration>
 					<executions>				        	
