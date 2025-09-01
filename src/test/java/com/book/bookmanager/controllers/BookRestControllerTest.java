@@ -59,4 +59,12 @@ public class BookRestControllerTest {
 				.andExpect(jsonPath("$.author", is("test"))).andExpect(jsonPath("$.category", is("test")))
 				.andExpect(jsonPath("$.price", is(10)));
 	}
+
+	@Test
+	public void testOneBookByIdWithNotFoundBook() throws Exception {
+		when(bookService.getBookById(anyLong())).thenReturn(null);
+		this.mvc.perform(get("/api/books/1").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+				.andExpect(content().string(""));
+		// Check contenuto vuoto
+	}
 }
