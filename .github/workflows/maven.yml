@@ -18,18 +18,19 @@ jobs:
             java: 17
             additional-maven-args: >
               -Pcoveralls -DrepoToken=$COVERALLS_REPO_TOKEN -DpullRequest=${{ github.event.pull_request.number }}
-              sonar:sonar
 
     name: Build with Java ${{ matrix.java }} on ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
+
     - name: Set up JDK ${{ matrix.java }}
       uses: actions/setup-java@v3
       with:
         java-version: ${{ matrix.java }}
         distribution: temurin
+
     - name: Cache Maven and SonarCloud packages
       uses: actions/cache@v3
       with:
@@ -39,21 +40,27 @@ jobs:
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml', '**/*.yml') }}
         restore-keys: ${{ runner.os }}-m2-
 
-    - name: Build with Maven and SonarCloud
+    - name: Build with Maven
       run: >
         mvn verify ${{ matrix.additional-maven-args }}
       working-directory: ${{ env.workdir }}
       env: 
         COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
     - name: Generate JUnit Report
       run: >
         mvn surefire-report:report-only site:site -DgenerateReports=false
       working-directory: ${{ env.workdir }}
 
-      if: ${{ failure() }}  # Archivio report per ispezionarli solo quando i test falliscono
+    - name: SonarCloud
+      run: >
+        mvn sonar:sonar
+      env: 
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
     - name: Archive JUnit Report
+      if: ${{ failure() }}  # Archivio report per ispezionarli solo quando i test falliscono
       uses: actions/upload-artifact@v4
       with:
         name: surefire-report-jdk-${{ matrix.java }}
