@@ -8,6 +8,7 @@ class BookmanagerApplicationTests {
 
 	@Test
 	void contextLoads() {
+		// TODO: comment explaining why the method is empty
 	}
 
 }
