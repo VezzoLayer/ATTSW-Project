@@ -26,13 +26,41 @@
 		<tag/>
 		<url/>
 	</scm>
-	
+
 	<properties>
 		<java.version>17</java.version>
-		<!-- Configurazione SonarCloud -->
+		
+		<!-- Configurazione Sonar -->
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 		<sonar.organization>vezzolayer</sonar.organization>
 		<sonar.projectKey>VezzoLayer_ATTSW-Project</sonar.projectKey>
+		<!-- Locazione report Jacoco -->
+		<sonar.coverage.jacoco.xmlReportPaths>
+			${project.reporting.outputDirectory}/jacoco/jacoco.xml
+		</sonar.coverage.jacoco.xmlReportPaths>
+		<!-- Include UT e IT -->
+		<sonar.junit.reportPaths>
+			${project.build.directory}/surefire-reports,
+			${project.build.directory}/failsafe-reports
+		</sonar.junit.reportPaths>
+		<!-- Scan di ulteriori files -->
+		<sonar.sources>
+			pom.xml,
+			${project.build.sourceDirectory},
+		</sonar.sources>
+		<!-- Rileva ulteriori tests configurati nel build-helper-maven-plugin -->
+		<sonar.tests>
+			${project.build.testSourceDirectory},
+			${basedir}/src/it/java,
+			${basedir}/src/e2e/java,
+			${basedir}/src/bdd/java
+		</sonar.tests>		
+		<!-- Esclude Model e Application -->
+		<sonar.coverage.exclusions>
+			**/model/*,
+			**/BookmanagerApplication.*
+		</sonar.coverage.exclusions>
+		
 	</properties>
 	
 	<dependencies>
@@ -69,11 +97,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 			<exclusions>
-		    	<exclusion>
-		    		<!-- Esclude Junit5 -->
-		    		<groupId>org.junit.jupiter</groupId>
-		    		<artifactId>junit-jupiter</artifactId>
-		  		</exclusion>
+				<exclusion>
+					<!-- Esclude Junit5 -->
+					<groupId>org.junit.jupiter</groupId>
+					<artifactId>junit-jupiter</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -206,29 +234,29 @@
 					<version>0.8.13</version>
 					<configuration>
 						<excludes>
-							<exclude>**/*Application.*</exclude>
+							<exclude>**/BookmanagerApplication.*</exclude>
 							<exclude>**/model/*</exclude>
 						</excludes>
 					</configuration>
 					<executions>				        	
-			        	<execution>
-			            <goals>
-			            	<!-- Attiva l’agent per raccogliere i dati, di default phase "initialize" -->
-			            	<goal>prepare-agent</goal>
-			            	<!-- Genera il report HTML, di default phase "verify" -->
-			            	<goal>report</goal>
-			            </goals>
-			        	</execution>
-			        	<execution>
-			            <id>jacoco-check</id>
-			            <goals>
-			            	<!-- Check, di default phase "verify" -->
-			            	<goal>check</goal>
-			            </goals>
-			            <configuration>
-				            <rules>
+						<execution>
+						<goals>
+							<!-- Attiva l’agent per raccogliere i dati, di default phase "initialize" -->
+							<goal>prepare-agent</goal>
+							<!-- Genera il report HTML, di default phase "verify" -->
+							<goal>report</goal>
+						</goals>
+						</execution>
+						<execution>
+						<id>jacoco-check</id>
+						<goals>
+							<!-- Check, di default phase "verify" -->
+							<goal>check</goal>
+						</goals>
+						<configuration>
+							<rules>
 								<rule>
-							    	<element>PACKAGE</element>
+									<element>PACKAGE</element>
 									<limits>
 										<limit>
 										    <counter>LINE</counter>
@@ -239,8 +267,8 @@
 								</rule>
 							</rules>
 						</configuration>
-			        	</execution>
-			        </executions>
+						</execution>
+					</executions>
 				</plugin>
 				<plugin>
 					<groupId>org.pitest</groupId>
@@ -255,9 +283,9 @@
 							<param>com.book.bookmanager.jpa*</param>
 							<param>com.book.bookmanager.services*</param>
 						</targetTests>
-				 		<mutators>
-				 			<mutator>STRONGER</mutator>
-				 		</mutators>
+						<mutators>
+							<mutator>STRONGER</mutator>
+						</mutators>
 						<mutationThreshold>100</mutationThreshold>
 					</configuration>
 					<executions>
@@ -282,11 +310,11 @@
 					</dependency>
 					</dependencies>
 				</plugin>
-				  <plugin>
-			      <groupId>org.sonarsource.scanner.maven</groupId>
-			      <artifactId>sonar-maven-plugin</artifactId>
-			      <version>5.2.0.4988</version>
-			    </plugin>
+				<plugin>
+					<groupId>org.sonarsource.scanner.maven</groupId>
+					<artifactId>sonar-maven-plugin</artifactId>
+					<version>5.2.0.4988</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
