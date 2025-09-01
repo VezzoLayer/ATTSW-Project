@@ -244,16 +244,17 @@
 					<version>1.15.0</version>
 					<configuration>
 						<targetClasses>
-							<param>com.book.bookmanager.repositories*</param>
+							<param>com.book.bookmanager.services*</param>
 						</targetClasses>
 						<targetTests>
 							<param>com.book.bookmanager.repositories*</param>
 							<param>com.book.bookmanager.jpa*</param>
+							<param>com.book.bookmanager.services*</param>
 						</targetTests>
 				 		<mutators>
 				 			<mutator>STRONGER</mutator>
 				 		</mutators>
-						<mutationThreshold>90</mutationThreshold>
+						<mutationThreshold>100</mutationThreshold>
 					</configuration>
 					<executions>
 						<execution>
