@@ -23,12 +23,13 @@ jobs:
     name: Build with Java ${{ matrix.java }} on ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
     - name: Set up JDK ${{ matrix.java }}
       uses: actions/setup-java@v3
       with:
         java-version: ${{ matrix.java }}
         distribution: temurin
-        fetch-depth: 0
     - name: Cache Maven and SonarCloud packages
       uses: actions/cache@v3
       with:
