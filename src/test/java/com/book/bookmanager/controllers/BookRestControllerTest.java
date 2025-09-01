@@ -38,11 +38,14 @@ public class BookRestControllerTest {
 	}
 
 	@Test
-	public void testAllBooksWhenThereIsOneShouldReturnIt() throws Exception {
-		when(bookService.getAllBooks()).thenReturn(asList(new Book(1L, "1st book", "test", "test", 10)));
+	public void testAllBooksWhenThereIsSomeShouldReturnThem() throws Exception {
+		when(bookService.getAllBooks()).thenReturn(
+				asList(new Book(1L, "1st book", "test", "test", 10), new Book(2L, "2nd book", "test", "test", 20)));
 		this.mvc.perform(get("/api/books").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
 				.andExpect(jsonPath("$[0].id", is(1))).andExpect(jsonPath("$[0].title", is("1st book")))
 				.andExpect(jsonPath("$[0].author", is("test"))).andExpect(jsonPath("$[0].category", is("test")))
-				.andExpect(jsonPath("$[0].price", is(10)));
+				.andExpect(jsonPath("$[0].price", is(10))).andExpect(jsonPath("$[1].id", is(2)))
+				.andExpect(jsonPath("$[1].title", is("2nd book"))).andExpect(jsonPath("$[1].author", is("test")))
+				.andExpect(jsonPath("$[1].category", is("test"))).andExpect(jsonPath("$[1].price", is(20)));
 	}
 }
