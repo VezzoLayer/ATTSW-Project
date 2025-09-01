@@ -2,6 +2,7 @@ package com.book.bookmanager.controllers;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -27,6 +28,7 @@ public class BookRestControllerTest {
 	@Autowired
 	private MockMvc mvc;
 
+	// @MockBean deprecated in favor of @MockitoBean
 	@MockitoBean
 	private BookService bookService;
 
@@ -38,7 +40,7 @@ public class BookRestControllerTest {
 	}
 
 	@Test
-	public void testAllBooksWhenThereIsSomeShouldReturnThem() throws Exception {
+	public void testAllBooksWhenThereIsSome() throws Exception {
 		when(bookService.getAllBooks()).thenReturn(
 				asList(new Book(1L, "1st book", "test", "test", 10), new Book(2L, "2nd book", "test", "test", 20)));
 		this.mvc.perform(get("/api/books").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
@@ -47,5 +49,14 @@ public class BookRestControllerTest {
 				.andExpect(jsonPath("$[0].price", is(10))).andExpect(jsonPath("$[1].id", is(2)))
 				.andExpect(jsonPath("$[1].title", is("2nd book"))).andExpect(jsonPath("$[1].author", is("test")))
 				.andExpect(jsonPath("$[1].category", is("test"))).andExpect(jsonPath("$[1].price", is(20)));
+	}
+
+	@Test
+	public void testOneBookByIdWithExistingBook() throws Exception {
+		when(bookService.getBookById(anyLong())).thenReturn(new Book(1L, "1st book", "test", "test", 10));
+		this.mvc.perform(get("/api/books/1").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+				.andExpect(jsonPath("$.id", is(1))).andExpect(jsonPath("$.title", is("1st book")))
+				.andExpect(jsonPath("$.author", is("test"))).andExpect(jsonPath("$.category", is("test")))
+				.andExpect(jsonPath("$.price", is(10)));
 	}
 }
