@@ -71,7 +71,7 @@ public class BookServiceWithMockitoTest {
 		
 		when(bookRepository.save(any(Book.class))).thenReturn(replaced);
 		
-		Book result = bookService.updateEmployeeById(1L, replacement);
+		Book result = bookService.updateBookById(1L, replacement);
 		
 		assertThat(result).isSameAs(replaced);
 		

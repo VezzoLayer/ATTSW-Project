@@ -29,7 +29,7 @@ public class BookService {
 		return bookRepository.save(book);
 	}
 
-	public Book updateEmployeeById(long id, Book replacement) {
+	public Book updateBookById(long id, Book replacement) {
 		replacement.setId(id);
 		return bookRepository.save(replacement);
 	}
