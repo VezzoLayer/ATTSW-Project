@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,5 +35,10 @@ public class BookRestController {
 	@PostMapping("/new")
 	public Book newBook(@RequestBody Book book) {
 		return bookService.insertNewBook(book);
+	}
+
+	@PutMapping("/update/{id}")
+	public Book updateBook(@PathVariable long id, @RequestBody Book book) {
+		return bookService.updateBookById(id, book);
 	}
 }
