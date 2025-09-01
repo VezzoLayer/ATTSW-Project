@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -67,4 +68,18 @@ public class BookRestControllerTest {
 				.andExpect(content().string(""));
 		// Check contenuto vuoto
 	}
+
+	@Test
+	public void testPostBook() throws Exception {
+		Book requestBodyBook = new Book(null, "new book", "author", "category", 10);
+
+		when(bookService.insertNewBook(requestBodyBook)).thenReturn(new Book(1L, "new book", "author", "category", 10));
+
+		this.mvc.perform(post("/api/books/new").contentType(MediaType.APPLICATION_JSON)
+				.content("{\"title\":\"new book\", \"author\":\"author\", \"category\":\"category\", \"price\":10}")
+				.accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andExpect(jsonPath("$.id", is(1)))
+				.andExpect(jsonPath("$.title", is("new book"))).andExpect(jsonPath("$.author", is("author")))
+				.andExpect(jsonPath("$.category", is("category"))).andExpect(jsonPath("$.price", is(10)));
+	}
+
 }
