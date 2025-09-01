@@ -1,0 +1,5 @@
+package com.book.bookmanager.controllers;
+
+public class BookWebControllerTest {
+
+}
