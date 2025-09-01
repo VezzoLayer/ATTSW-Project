@@ -277,11 +277,13 @@
 					<configuration>
 						<targetClasses>
 							<param>com.book.bookmanager.services*</param>
+							<param>com.book.bookmanager.controllers*</param>
 						</targetClasses>
 						<targetTests>
 							<param>com.book.bookmanager.repositories*</param>
 							<param>com.book.bookmanager.jpa*</param>
 							<param>com.book.bookmanager.services*</param>
+							<param>com.book.bookmanager.controllers*</param>
 						</targetTests>
 						<mutators>
 							<mutator>STRONGER</mutator>
