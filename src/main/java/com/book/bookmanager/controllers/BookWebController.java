@@ -13,6 +13,10 @@ import com.book.bookmanager.services.BookService;
 @Controller
 public class BookWebController {
 
+	private static final String MESSAGE_ATTRIBUTE = "message";
+	private static final String BOOK_ATTRIBUTE = "book";
+	private static final String BOOKS_ATTRIBUTE = "books";
+
 	private BookService bookService;
 
 	// Contructor Injection suggerito da SonarCloud
@@ -24,8 +28,8 @@ public class BookWebController {
 	public String index(Model model) {
 		List<Book> allBooks = bookService.getAllBooks();
 
-		model.addAttribute("books", allBooks);
-		model.addAttribute("message", allBooks.isEmpty() ? "No book to show" : "");
+		model.addAttribute(BOOKS_ATTRIBUTE, allBooks);
+		model.addAttribute(MESSAGE_ATTRIBUTE, allBooks.isEmpty() ? "No book to show" : "");
 
 		return "index";
 	}
@@ -34,16 +38,16 @@ public class BookWebController {
 	public String editBook(@PathVariable long id, Model model) {
 		Book bookById = bookService.getBookById(id);
 
-		model.addAttribute("book", bookById);
-		model.addAttribute("message", bookById == null ? "No book found with id: " + id : "");
+		model.addAttribute(BOOK_ATTRIBUTE, bookById);
+		model.addAttribute(MESSAGE_ATTRIBUTE, bookById == null ? "No book found with id: " + id : "");
 
 		return "edit";
 	}
 
 	@GetMapping("/new")
 	public String newBook(Model model) {
-		model.addAttribute("book", new Book());
-		model.addAttribute("message", "");
+		model.addAttribute(BOOK_ATTRIBUTE, new Book());
+		model.addAttribute(MESSAGE_ATTRIBUTE, "");
 
 		return "edit";
 	}
