@@ -1,6 +1,8 @@
 package com.book.bookmanager.controllers;
 
+import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,4 +32,12 @@ public class BookWebControllerHtmlUnitTest {
 		assertThat(page.getTitleText()).isEqualTo("Books");
 	}
 
+	@Test
+	public void testHomePageWithNoBooks() throws Exception {
+		when(bookService.getAllBooks()).thenReturn(emptyList());
+		
+		HtmlPage page = this.webClient.getPage("/");
+		
+		assertThat(page.getBody().getTextContent()).contains("No books");
+	}
 }
