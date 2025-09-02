@@ -1,5 +1,6 @@
 package com.book.bookmanager.controllers;
 
+import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -13,7 +14,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import org.htmlunit.WebClient;
 import org.htmlunit.html.HtmlPage;
+import org.htmlunit.html.HtmlTable;
 
+import com.book.bookmanager.model.Book;
 import com.book.bookmanager.services.BookService;
 
 @RunWith(SpringRunner.class)
@@ -35,9 +38,20 @@ public class BookWebControllerHtmlUnitTest {
 	@Test
 	public void testHomePageWithNoBooks() throws Exception {
 		when(bookService.getAllBooks()).thenReturn(emptyList());
+
+		HtmlPage page = this.webClient.getPage("/");
+
+		assertThat(page.getBody().getTextContent()).contains("No books");
+	}
+
+	@Test
+	public void testHomePageWithBooksShouldShowThemInATable() throws Exception {
+		when(bookService.getAllBooks()).thenReturn(asList(new Book(1L, "book 1", "author 1", "cateogry 1", 10),
+				new Book(2L, "book 2", "author 2", "cateogry 2", 20)));
 		
 		HtmlPage page = this.webClient.getPage("/");
 		
-		assertThat(page.getBody().getTextContent()).contains("No books");
+		assertThat(page.getBody().getTextContent()).doesNotContain("No books");
+		HtmlTable table = page.getHtmlElementById("books_table");
 	}
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<meta charset="UTF-8" />
@@ -7,7 +7,18 @@
 </head>
 
 <body>
-	No books
+
+	<!-- IF NO BOOKS ARE PRESENT -->
+	<div th:if="${books.empty}">
+		<div>No books</div>
+	</div>
+
+	<!-- IF BOOKS ARE PRESENT -->
+	<div th:unless="${books.empty}">
+		<table id="books_table">
+		</table>
+	</div>
+
 </body>
 
 </html>
