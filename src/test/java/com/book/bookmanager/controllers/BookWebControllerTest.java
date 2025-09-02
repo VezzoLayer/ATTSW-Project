@@ -51,7 +51,6 @@ public class BookWebControllerTest {
 
 		mvc.perform(get("/")).andExpect(view().name("index")).andExpect(model().attribute("books", books))
 				.andExpect(model().attribute("message", ""));
-		;
 	}
 
 	@Test
@@ -61,6 +60,15 @@ public class BookWebControllerTest {
 		mvc.perform(get("/")).andExpect(view().name("index"))
 				.andExpect(model().attribute("books", Collections.emptyList()))
 				.andExpect(model().attribute("message", "No book to show"));
-		;
+	}
+
+	@Test
+	public void testEditBookWhenTheBookIsFound() throws Exception {
+		Book book = new Book(1L, "book test", "author test", "category test", 10);
+
+		when(bookService.getBookById(1L)).thenReturn(book);
+
+		mvc.perform(get("/edit/1")).andExpect(view().name("edit")).andExpect(model().attribute("book", book))
+				.andExpect(model().attribute("message", ""));
 	}
 }

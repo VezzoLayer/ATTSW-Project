@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.book.bookmanager.model.Book;
 import com.book.bookmanager.services.BookService;
@@ -27,5 +28,15 @@ public class BookWebController {
 		model.addAttribute("message", allBooks.isEmpty() ? "No book to show" : "");
 
 		return "index";
+	}
+
+	@GetMapping("/edit/{id}")
+	public String editBook(@PathVariable long id, Model model) {
+		Book bookById = bookService.getBookById(id);
+
+		model.addAttribute("book", bookById);
+		model.addAttribute("message", "");
+
+		return "edit";
 	}
 }
