@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Test;
@@ -43,11 +44,23 @@ public class BookWebControllerTest {
 	}
 
 	@Test
-	public void testHomeViewShowsBooksWithNoMessage() throws Exception {
+	public void testHomeViewShowsBooks() throws Exception {
 		List<Book> books = asList(new Book(1L, "test", "test", "test", 10));
 
 		when(bookService.getAllBooks()).thenReturn(books);
 
-		mvc.perform(get("/")).andExpect(view().name("index")).andExpect(model().attribute("books", books));
+		mvc.perform(get("/")).andExpect(view().name("index")).andExpect(model().attribute("books", books))
+				.andExpect(model().attribute("message", ""));
+		;
+	}
+
+	@Test
+	public void testHomeViewShowsMessageWhenThereAreNoBooks() throws Exception {
+		when(bookService.getAllBooks()).thenReturn(Collections.emptyList());
+
+		mvc.perform(get("/")).andExpect(view().name("index"))
+				.andExpect(model().attribute("books", Collections.emptyList()))
+				.andExpect(model().attribute("message", "No book to show"));
+		;
 	}
 }
