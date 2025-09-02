@@ -54,8 +54,14 @@ public class BookWebController {
 	}
 
 	@PostMapping("/save")
-	public String saveEmployee(Book book) {
-		bookService.insertNewBook(book);
+	public String saveBook(Book book) {
+		final Long id = book.getId();
+
+		if (id == null) {
+			bookService.insertNewBook(book);
+		} else {
+			bookService.updateBookById(id, book);
+		}
 
 		return "redirect:/";
 	}

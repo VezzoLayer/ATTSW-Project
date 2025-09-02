@@ -99,4 +99,12 @@ public class BookWebControllerTest {
 
 		verify(bookService).insertNewBook(new Book(null, "test title", "test author", "test category", 10));
 	}
+
+	@Test
+	public void testPostBookWithIdShouldUpdateExistingBook() throws Exception {
+		mvc.perform(post("/save").param("id", "1").param("title", "test title").param("author", "test author")
+				.param("category", "test category").param("price", "10")).andExpect(view().name("redirect:/"));
+
+		verify(bookService).updateBookById(1L, new Book(1L, "test title", "test author", "test category", 10));
+	}
 }
