@@ -68,4 +68,12 @@ public class BookWebControllerHtmlUnitTest {
 		assertThat(page.getTitleText()).isEqualTo("Books");
 	}
 
+	@Test
+	public void testEditNonExistentingBook() throws Exception {
+		when(bookService.getBookById(1L)).thenReturn(null);
+
+		HtmlPage page = this.webClient.getPage("/edit/1");
+
+		assertThat(page.getBody().getTextContent()).contains("No book found with id: 1");
+	}
 }
