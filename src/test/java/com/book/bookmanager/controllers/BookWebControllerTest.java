@@ -1,6 +1,7 @@
 package com.book.bookmanager.controllers;
 
 import static java.util.Arrays.asList;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -70,5 +71,13 @@ public class BookWebControllerTest {
 
 		mvc.perform(get("/edit/1")).andExpect(view().name("edit")).andExpect(model().attribute("book", book))
 				.andExpect(model().attribute("message", ""));
+	}
+
+	@Test
+	public void testEditBookWhenBookIsNotFound() throws Exception {
+		when(bookService.getBookById(1L)).thenReturn(null);
+
+		mvc.perform(get("/edit/1")).andExpect(view().name("edit")).andExpect(model().attribute("book", nullValue()))
+				.andExpect(model().attribute("message", "No book found with id: 1"));
 	}
 }

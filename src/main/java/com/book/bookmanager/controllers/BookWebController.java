@@ -35,7 +35,7 @@ public class BookWebController {
 		Book bookById = bookService.getBookById(id);
 
 		model.addAttribute("book", bookById);
-		model.addAttribute("message", "");
+		model.addAttribute("message", bookById == null ? "No book found with id: " + id : "");
 
 		return "edit";
 	}
