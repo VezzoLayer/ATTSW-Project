@@ -52,11 +52,20 @@ public class BookWebControllerHtmlUnitTest {
 		HtmlPage page = this.webClient.getPage("/");
 
 		assertThat(page.getBody().getTextContent()).doesNotContain("No books");
-		
+
 		HtmlTable table = page.getHtmlElementById("books_table");
-		
+
 		// replace /t con spazi bianchi e rimuove /r
-		assertThat(table.asNormalizedText().replace("\t", " ").replace("\r", "")).isEqualTo("Books\n" + "ID Title Author Category Price\n"
-				+ "1 book1 author1 category1 10\n" + "2 book2 author2 category2 20");
+		assertThat(table.asNormalizedText().replace("\t", " ").replace("\r", ""))
+				.isEqualTo("Books\n" + "ID Title Author Category Price\n" + "1 book1 author1 category1 10\n"
+						+ "2 book2 author2 category2 20");
 	}
+
+	@Test
+	public void testEditPageTitle() throws Exception {
+		HtmlPage page = webClient.getPage("/edit/1");
+
+		assertThat(page.getTitleText()).isEqualTo("Books");
+	}
+
 }
