@@ -39,4 +39,12 @@ public class BookWebController {
 
 		return "edit";
 	}
+
+	@GetMapping("/new")
+	public String newBook(Model model) {
+		model.addAttribute("book", new Book());
+		model.addAttribute("message", "");
+
+		return "edit";
+	}
 }
