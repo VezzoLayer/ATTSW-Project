@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.book.bookmanager.model.Book;
 import com.book.bookmanager.services.BookService;
@@ -50,5 +51,12 @@ public class BookWebController {
 		model.addAttribute(MESSAGE_ATTRIBUTE, "");
 
 		return "edit";
+	}
+
+	@PostMapping("/save")
+	public String saveEmployee(Book book) {
+		bookService.insertNewBook(book);
+
+		return "redirect:/";
 	}
 }

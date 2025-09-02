@@ -2,9 +2,11 @@ package com.book.bookmanager.controllers;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.nullValue;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions; // VerifyZeroInteractions deprecated in favor of
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -88,5 +90,13 @@ public class BookWebControllerTest {
 				.andExpect(model().attribute("message", ""));
 
 		verifyNoInteractions(bookService);
+	}
+
+	@Test
+	public void testPostBookWithoutIdShouldInsertNewBook() throws Exception {
+		mvc.perform(post("/save").param("title", "test title").param("author", "test author")
+				.param("category", "test category").param("price", "10")).andExpect(view().name("redirect:/"));
+
+		verify(bookService).insertNewBook(new Book(null, "test title", "test author", "test category", 10));
 	}
 }
