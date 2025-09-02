@@ -16,6 +16,25 @@
 	<!-- IF BOOKS ARE PRESENT -->
 	<div th:unless="${books.empty}">
 		<table id="books_table">
+			<caption>Books</caption>
+			<thead>
+				<tr>
+					<th scope="col">ID</th>
+					<th scope="col">Title</th>
+					<th scope="col">Author</th>
+					<th scope="col">Category</th>
+					<th scope="col">Price</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="book : ${books}">
+					<td th:text="${book.id}"></td>
+					<td th:text="${book.title}"></td>
+					<td th:text="${book.author}"></td>
+					<td th:text="${book.category}"></td>
+					<td th:text="${book.price}"></td>
+				</tr>
+			</tbody>
 		</table>
 	</div>
 

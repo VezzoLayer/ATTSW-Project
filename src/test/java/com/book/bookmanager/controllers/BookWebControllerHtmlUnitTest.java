@@ -45,13 +45,18 @@ public class BookWebControllerHtmlUnitTest {
 	}
 
 	@Test
-	public void testHomePageWithBooksShouldShowThemInATable() throws Exception {
-		when(bookService.getAllBooks()).thenReturn(asList(new Book(1L, "book 1", "author 1", "cateogry 1", 10),
-				new Book(2L, "book 2", "author 2", "cateogry 2", 20)));
-		
+	public void testHomePageWithBooksShouldShowThemInATableWithCorrectText() throws Exception {
+		when(bookService.getAllBooks()).thenReturn(asList(new Book(1L, "book1", "author1", "category1", 10),
+				new Book(2L, "book2", "author2", "category2", 20)));
+
 		HtmlPage page = this.webClient.getPage("/");
-		
+
 		assertThat(page.getBody().getTextContent()).doesNotContain("No books");
+		
 		HtmlTable table = page.getHtmlElementById("books_table");
+		
+		// replace /t con spazi bianchi e rimuove /r
+		assertThat(table.asNormalizedText().replace("\t", " ").replace("\r", "")).isEqualTo("Books\n" + "ID Title Author Category Price\n"
+				+ "1 book1 author1 category1 10\n" + "2 book2 author2 category2 20");
 	}
 }
