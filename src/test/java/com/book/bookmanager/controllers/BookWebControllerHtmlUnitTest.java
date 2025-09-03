@@ -60,11 +60,14 @@ public class BookWebControllerHtmlUnitTest {
 		String expectedTableContent = """
 				Books
 				ID Title Author Category Price
-				1 book1 author1 category1 10
-				2 book2 author2 category2 20""";
+				1 book1 author1 category1 10 Edit
+				2 book2 author2 category2 20 Edit""";
 
 		// replace /t con spazi bianchi e rimuove /r
 		assertThat(table.asNormalizedText().replace("\t", " ").replace("\r", "")).isEqualTo(expectedTableContent);
+
+		page.getAnchorByHref("/edit/1");
+		page.getAnchorByHref("/edit/2");
 	}
 
 	@Test

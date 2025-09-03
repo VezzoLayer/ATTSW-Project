@@ -37,6 +37,7 @@
 					<td th:text="${book.author}"></td>
 					<td th:text="${book.category}"></td>
 					<td th:text="${book.price}"></td>
+					<td><a th:href="@{'/edit/' + ${book.id}}">Edit</a></td>
 				</tr>
 			</tbody>
 		</table>
