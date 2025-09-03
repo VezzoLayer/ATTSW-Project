@@ -109,20 +109,26 @@ public class BookWebControllerHtmlUnitTest {
 	@Test
 	public void testEditNewBook() throws Exception {
 		HtmlPage page = this.webClient.getPage("/new");
-		
+
 		// Get the form that we are dealing with
 		final HtmlForm form = page.getFormByName("book_form");
-		
+
 		// Retrieve fields by their names and change their values
 		form.getInputByName("title").setValueAttribute("new title");
 		form.getInputByName("author").setValueAttribute("new author");
 		form.getInputByName("category").setValueAttribute("new category");
 		form.getInputByName("price").setValueAttribute("10");
-		
+
 		// Submit the form by clicking the button and get back the second page.
 		form.getButtonByName("btn_submit").click();
-		
+
 		// verifica che il book sia inserito con i valori corretti dal servizio
 		verify(bookService).insertNewBook(new Book(null, "new title", "new author", "new category", 10));
+	}
+
+	@Test
+	public void testHomePageShouldProvideALinkForCreatingANewBook() throws Exception {
+		HtmlPage page = this.webClient.getPage("/");
+		assertThat(page.getAnchorByText("New Book").getHrefAttribute()).isEqualTo("/new");
 	}
 }

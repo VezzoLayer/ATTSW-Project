@@ -8,6 +8,10 @@
 
 <body>
 
+	<div>
+		<a th:href="@{/new}">New Book</a>
+	</div>
+
 	<!-- IF NO BOOKS ARE PRESENT -->
 	<div th:if="${books.empty}">
 		<div>No books</div>
