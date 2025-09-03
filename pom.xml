@@ -60,7 +60,6 @@
 			**/model/*,
 			**/BookmanagerApplication.*
 		</sonar.coverage.exclusions>
-		
 	</properties>
 	
 	<dependencies>
@@ -114,6 +113,12 @@
 					<artifactId>hamcrest-core</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.htmlunit</groupId>
+			<artifactId>htmlunit</artifactId>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
@@ -241,16 +246,16 @@
 					<executions>				        	
 						<execution>
 						<goals>
-							<!-- Attiva l’agent per raccogliere i dati, di default phase "initialize" -->
+								<!-- Attiva l’agent per raccogliere i dati, di default phase "initialize" -->
 							<goal>prepare-agent</goal>
-							<!-- Genera il report HTML, di default phase "verify" -->
+								<!-- Genera il report HTML, di default phase "verify" -->
 							<goal>report</goal>
 						</goals>
 						</execution>
 						<execution>
 						<id>jacoco-check</id>
 						<goals>
-							<!-- Check, di default phase "verify" -->
+								<!-- Check, di default phase "verify" -->
 							<goal>check</goal>
 						</goals>
 						<configuration>
@@ -304,7 +309,7 @@
 					<artifactId>coveralls-maven-plugin</artifactId>
 					<version>4.3.0</version>
 					<dependencies>
-					<!-- Richiesto perché uso JDK 17 e javax.xml.bind è stato rimosso dalla versione 9 o superiori -->
+						<!-- Richiesto perché uso JDK 17 e javax.xml.bind è stato rimosso dalla versione 9 o superiori -->
 					<dependency>
 						<groupId>javax.xml.bind</groupId>
 						<artifactId>jaxb-api</artifactId>
@@ -339,7 +344,7 @@
 			<build>
 				<plugins>
 					<plugin>
-					<!-- Configurato in pluginManagment -->
+						<!-- Configurato in pluginManagment -->
 						<groupId>org.jacoco</groupId>
 						<artifactId>jacoco-maven-plugin</artifactId>
 					</plugin>
