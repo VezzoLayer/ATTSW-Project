@@ -3,6 +3,7 @@ package com.book.bookmanager.controllers;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.Test;
@@ -13,6 +14,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import org.htmlunit.WebClient;
+import org.htmlunit.html.HtmlForm;
 import org.htmlunit.html.HtmlPage;
 import org.htmlunit.html.HtmlTable;
 
@@ -73,11 +75,34 @@ public class BookWebControllerHtmlUnitTest {
 	}
 
 	@Test
-	public void testEditNonExistentingBook() throws Exception {
+	public void testEditNonExistingBook() throws Exception {
 		when(bookService.getBookById(1L)).thenReturn(null);
 
 		HtmlPage page = this.webClient.getPage("/edit/1");
 
 		assertThat(page.getBody().getTextContent()).contains("No book found with id: 1");
+	}
+
+	@Test
+	public void testEditExistingBook() throws Exception {
+		when(bookService.getBookById(1))
+				.thenReturn(new Book(1L, "original title", "original author", "original category", 10));
+		HtmlPage page = this.webClient.getPage("/edit/1");
+
+		// Get the form that we are dealing with
+		final HtmlForm form = page.getFormByName("book_form");
+
+		// check fields are filled with the correct values and modify their values
+		form.getInputByValue("original title").setValueAttribute("modified title");
+		form.getInputByValue("original author").setValueAttribute("modified author");
+		form.getInputByValue("original category").setValueAttribute("modified category");
+		form.getInputByValue("10").setValueAttribute("20");
+
+		// Now submit the form by clicking the button and get back the second page
+		form.getButtonByName("btn_submit").click();
+
+		// verifica che il book modificato è aggiornato con i valori corretti
+		verify(bookService).updateBookById(1L,
+				new Book(1L, "modified title", "modified author", "modified category", 20));
 	}
 }
