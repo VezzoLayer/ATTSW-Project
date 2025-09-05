@@ -82,7 +82,7 @@ public class BookWebControllerIT {
 	}
 
 	@Test
-	public void testEditPageUpdateEmployee() throws Exception {
+	public void testEditPageUpdateBook() {
 		Book testBook = bookRepository.save(new Book(null, "test book", "test author", "test category", 10));
 		driver.get(baseUrl + "/edit/" + testBook.getId());
 

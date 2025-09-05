@@ -54,7 +54,7 @@
 			${basedir}/src/it/java
 			<!-- ${basedir}/src/e2e/java, -->
 			<!-- ${basedir}/src/bdd/java -->
-		</sonar.tests>		
+		</sonar.tests>
 		<!-- Esclude Model e Application -->
 		<sonar.coverage.exclusions>
 			**/model/*,
