@@ -56,7 +56,13 @@ public class BookWebControllerIT {
 		assertThat(driver.findElement(By.id("books_table")).getText()).contains("test book", "test author",
 				"test category", "10", "Edit");
 
-		// "Edit" link è presente con href contenente /edit/{id}
 		driver.findElement(By.cssSelector("a[href*='/edit/" + testBook.getId() + "']"));
+	}
+
+	@Test
+	public void testHomePageWhenNoBooksArePresent() {
+		driver.get(baseUrl);
+
+		assertThat(driver.findElement(By.tagName("body")).getText()).contains("No books");
 	}
 }
