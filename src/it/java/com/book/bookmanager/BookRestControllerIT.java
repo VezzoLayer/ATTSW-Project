@@ -2,6 +2,7 @@ package com.book.bookmanager;
 
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.equalTo;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -39,7 +40,7 @@ public class BookRestControllerIT {
 	}
 
 	@Test
-	public void testNewBook() throws Exception {
+	public void testNewBook() {
 		// Crea un book con POST
 		Response response = given().contentType(MediaType.APPLICATION_JSON_VALUE)
 				.body(new Book(null, "new book", "author", "category", 10)).when().post("/api/books/new");
@@ -48,5 +49,19 @@ public class BookRestControllerIT {
 
 		// Lo legge indietro dalla repository
 		assertThat(bookRepository.findById(savedBook.getId())).contains(savedBook);
+	}
+
+	@Test
+	public void testUpdateBook() throws Exception {
+		// Crea un Book con la repository
+		Book savedBook = bookRepository
+				.save(new Book(null, "original title", "original author", "original category", 10));
+
+		// Lo modifico con PUT
+		given().contentType(MediaType.APPLICATION_JSON_VALUE)
+				.body(new Book(null, "modified title", "modified author", "modified category", 20)).when()
+				.put("/api/books/update/" + savedBook.getId()).then().statusCode(200).body("id",
+						equalTo(savedBook.getId().intValue()), "title", equalTo("modified title"), "author",
+						equalTo("modified author"), "category", equalTo("modified category"), "price", equalTo(20));
 	}
 }
