@@ -47,12 +47,12 @@ public class BookServiceRepositoryIT {
 
 	@Test
 	public void testRepositoryCorrectlyFindsBooksWithLowPrice() {
-		bookService.insertNewBook(new Book(null, "book", "author", "category", 10));
+		Book bookShouldBeFound1 = bookService.insertNewBook(new Book(null, "book", "author", "category", 10));
 		bookService.insertNewBook(new Book(null, "book", "author", "category", 20));
-		bookService.insertNewBook(new Book(null, "book", "author", "category", 15));
+		Book bookShouldBeFound2 = bookService.insertNewBook(new Book(null, "book", "author", "category", 15));
 
 		List<Book> books = bookRepository.findAllBooksWithLowPrice(17);
 
-		assertThat(books).hasSize(2);
+		assertThat(books).containsExactly(bookShouldBeFound1, bookShouldBeFound2);
 	}
 }
