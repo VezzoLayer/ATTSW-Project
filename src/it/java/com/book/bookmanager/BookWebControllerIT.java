@@ -65,4 +65,18 @@ public class BookWebControllerIT {
 
 		assertThat(driver.findElement(By.tagName("body")).getText()).contains("No books");
 	}
+
+	@Test
+	public void testEditPageNewBook() throws Exception {
+		driver.get(baseUrl + "/new");
+
+		driver.findElement(By.name("title")).sendKeys("new book");
+		driver.findElement(By.name("author")).sendKeys("new author");
+		driver.findElement(By.name("category")).sendKeys("new category");
+		driver.findElement(By.name("price")).sendKeys("80");
+		driver.findElement(By.name("btn_submit")).click();
+
+		assertThat(bookRepository.findByTitle("new book")).usingRecursiveComparison().ignoringFields("id")
+				.isEqualTo(new Book(null, "new book", "new author", "new category", 80L));
+	}
 }
