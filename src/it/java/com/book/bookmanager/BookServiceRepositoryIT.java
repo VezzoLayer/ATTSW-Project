@@ -32,4 +32,14 @@ public class BookServiceRepositoryIT {
 
 		assertThat(bookRepository.findById(savedBook.getId())).isPresent();
 	}
+
+	@Test
+	public void testServiceCanUpdateRepository() {
+		Book savedBook = bookRepository.save(new Book(null, "book", "author", "category", 10));
+
+		Book modifiedBook = bookService.updateBookById(savedBook.getId(),
+				new Book(savedBook.getId(), "modified book", "modified author", "modified category", 20));
+
+		assertThat(bookRepository.findById(savedBook.getId())).contains(modifiedBook);
+	}
 }
