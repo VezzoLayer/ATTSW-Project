@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -67,7 +68,7 @@ public class BookWebControllerIT {
 	}
 
 	@Test
-	public void testEditPageNewBook() throws Exception {
+	public void testEditPageNewBook() {
 		driver.get(baseUrl + "/new");
 
 		driver.findElement(By.name("title")).sendKeys("new book");
@@ -78,5 +79,32 @@ public class BookWebControllerIT {
 
 		assertThat(bookRepository.findByTitle("new book")).usingRecursiveComparison().ignoringFields("id")
 				.isEqualTo(new Book(null, "new book", "new author", "new category", 80L));
+	}
+
+	@Test
+	public void testEditPageUpdateEmployee() throws Exception {
+		Book testBook = bookRepository.save(new Book(null, "test book", "test author", "test category", 10));
+		driver.get(baseUrl + "/edit/" + testBook.getId());
+
+		final WebElement titleField = driver.findElement(By.name("title"));
+		titleField.clear();
+		titleField.sendKeys("modified book");
+
+		final WebElement authorField = driver.findElement(By.name("author"));
+		authorField.clear();
+		authorField.sendKeys("modified author");
+
+		final WebElement categoryField = driver.findElement(By.name("category"));
+		categoryField.clear();
+		categoryField.sendKeys("modified category");
+
+		final WebElement priceField = driver.findElement(By.name("price"));
+		priceField.clear();
+		priceField.sendKeys("20");
+
+		driver.findElement(By.name("btn_submit")).click();
+
+		assertThat(bookRepository.findByTitle("modified book")).usingRecursiveComparison().ignoringFields("id")
+				.isEqualTo(new Book(null, "modified book", "modified author", "modified category", 20L));
 	}
 }
