@@ -130,6 +130,17 @@
 			<artifactId>spring-mock-mvc</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>htmlunit-driver</artifactId>
+			<version>4.13.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-support</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -333,8 +344,6 @@
 							<param>com.book.bookmanager.controllers*</param>
 						</targetClasses>
 						<targetTests>
-							<param>com.book.bookmanager.repositories*</param>
-							<param>com.book.bookmanager.jpa*</param>
 							<param>com.book.bookmanager.services*</param>
 							<param>com.book.bookmanager.controllers*</param>
 						</targetTests>
