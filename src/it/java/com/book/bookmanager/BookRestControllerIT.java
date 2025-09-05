@@ -52,7 +52,7 @@ public class BookRestControllerIT {
 	}
 
 	@Test
-	public void testUpdateBook() throws Exception {
+	public void testUpdateBook() {
 		// Crea un Book con la repository
 		Book savedBook = bookRepository
 				.save(new Book(null, "original title", "original author", "original category", 10));
@@ -63,5 +63,16 @@ public class BookRestControllerIT {
 				.put("/api/books/update/" + savedBook.getId()).then().statusCode(200).body("id",
 						equalTo(savedBook.getId().intValue()), "title", equalTo("modified title"), "author",
 						equalTo("modified author"), "category", equalTo("modified category"), "price", equalTo(20));
+	}
+
+	@Test
+	public void testGetBookById() {
+		// Crea un Book con la repository
+		Book savedBook = bookRepository.save(new Book(null, "title", "author", "category", 10));
+
+		// Verifico di ottenerlo
+		given().accept(MediaType.APPLICATION_JSON_VALUE).when().get("/api/books/" + savedBook.getId()).then()
+				.statusCode(200).body("id", equalTo(savedBook.getId().intValue())).body("title", equalTo("title"))
+				.body("author", equalTo("author")).body("category", equalTo("category")).body("price", equalTo(10));
 	}
 }
