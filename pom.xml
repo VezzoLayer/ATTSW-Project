@@ -240,6 +240,11 @@
 								<ports>
 									<port>5432:5432</port>
 								</ports>
+								<env>
+									<POSTGRES_DB>bookdb</POSTGRES_DB>
+									<POSTGRES_USER>bookuser</POSTGRES_USER>
+									<POSTGRES_PASSWORD>bookpass</POSTGRES_PASSWORD>
+								</env>
 							</run>
 						</image>
 					</images>
