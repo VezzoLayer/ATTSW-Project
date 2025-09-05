@@ -2,6 +2,8 @@ package com.book.bookmanager;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,5 +43,16 @@ public class BookServiceRepositoryIT {
 				new Book(savedBook.getId(), "modified book", "modified author", "modified category", 20));
 
 		assertThat(bookRepository.findById(savedBook.getId())).contains(modifiedBook);
+	}
+
+	@Test
+	public void testRepositoryCorrectlyFindsBooksWithLowPrice() {
+		bookService.insertNewBook(new Book(null, "book", "author", "category", 10));
+		bookService.insertNewBook(new Book(null, "book", "author", "category", 20));
+		bookService.insertNewBook(new Book(null, "book", "author", "category", 15));
+
+		List<Book> books = bookRepository.findAllBooksWithLowPrice(17);
+
+		assertThat(books).hasSize(2);
 	}
 }
