@@ -141,6 +141,19 @@
 			<artifactId>selenium-support</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-java</artifactId>
+			<version>7.28.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-junit</artifactId>
+			<version>7.28.1</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -162,7 +175,6 @@
 						<configuration>
 							<sources>
 								<source>src/it/java</source>
-								<source>src/e2e/java</source>
 								<source>src/bdd/java</source>
 							</sources>
 						</configuration>
@@ -208,22 +220,6 @@
 							<goal>integration-test</goal>
 							<goal>verify</goal>
 						</goals>
-					</execution>
-					<execution>
-						<id>e2e-tests</id>
-						<goals>
-							<goal>integration-test</goal>
-							<goal>verify</goal>
-						</goals>
-						<configuration>
-							<excludes>
-								<exclude>**/*ApplicationTests.java</exclude>
-								<exclude>**/*IT.java</exclude>
-							</excludes>
-							<includes>
-								<include>**/*E2E.java</include>
-							</includes>
-						</configuration>
 					</execution>
 					<execution>
 						<id>bdd-tests</id>
