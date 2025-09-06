@@ -52,7 +52,7 @@
 		<!-- Rileva ulteriori tests configurati nel build-helper-maven-plugin -->
 		<sonar.tests>
 			${project.build.testSourceDirectory},
-			${basedir}/src/it/java
+			${basedir}/src/it/java,
 			${basedir}/src/bdd/java
 		</sonar.tests>
 		<!-- Esclude Model e Application -->
