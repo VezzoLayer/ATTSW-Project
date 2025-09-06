@@ -30,6 +30,7 @@ public class BookWebAppSteps {
 		driver.quit();
 	}
 
+	// Scenario: Create a new book
 	@Given("I am on the home page")
 	public void i_am_on_the_home_page() {
 		driver.get(baseUrl);
@@ -58,5 +59,49 @@ public class BookWebAppSteps {
 	public void i_should_see_in_the_books_table(String title, String author, String category, String price) {
 		String tableText = driver.findElement(By.id("books_table")).getText();
 		assertThat(tableText).contains(title, author, category, price);
+	}
+
+	// Scenario: Edit an existing book
+	@Given("I have a book with title {string}, author {string}, category {string}, price {string}")
+	public void i_have_a_book_with_title_author_category_price(String title, String author, String category,
+			String price) {
+		driver.get(baseUrl + "/new");
+		driver.findElement(By.name("title")).sendKeys(title);
+		driver.findElement(By.name("author")).sendKeys(author);
+		driver.findElement(By.name("category")).sendKeys(category);
+		driver.findElement(By.name("price")).sendKeys(price);
+		driver.findElement(By.name("btn_submit")).click();
+	}
+
+	@When("I go to the home page")
+	public void i_go_to_the_home_page() {
+		driver.get(baseUrl);
+	}
+
+	@When("I click on the edit link for {string}")
+	public void i_click_on_the_edit_link_for(String title) {
+		var bookRow = driver.findElement(By.xpath("//table[@id='books_table']//tr[td[text()='" + title + "']]"));
+		bookRow.findElement(By.linkText("Edit")).click();
+
+	}
+
+	@When("I update the book form with title {string}, author {string}, category {string}, price {string}")
+	public void i_update_the_book_form_with_title_author_category_price(String title, String author, String category,
+			String price) {
+		var titleField = driver.findElement(By.name("title"));
+		titleField.clear();
+		titleField.sendKeys(title);
+
+		var authorField = driver.findElement(By.name("author"));
+		authorField.clear();
+		authorField.sendKeys(author);
+
+		var categoryField = driver.findElement(By.name("category"));
+		categoryField.clear();
+		categoryField.sendKeys(category);
+
+		var priceField = driver.findElement(By.name("price"));
+		priceField.clear();
+		priceField.sendKeys(price);
 	}
 }
