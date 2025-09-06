@@ -47,7 +47,7 @@
 		<sonar.sources>
 			pom.xml,
 			${project.build.sourceDirectory},
-			src/main/resources
+			${basedir}/src/main/resources
 		</sonar.sources>
 		<!-- Rileva ulteriori tests configurati nel build-helper-maven-plugin -->
 		<sonar.tests>
