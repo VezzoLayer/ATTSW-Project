@@ -158,6 +158,12 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-devtools-v122</artifactId>
+			<version>4.20.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>io.github.bonigarcia</groupId>
 			<artifactId>webdrivermanager</artifactId>
 			<version>6.3.1</version>
@@ -316,6 +322,10 @@
 						<excludes>
 							<exclude>**/BookmanagerApplication.*</exclude>
 							<exclude>**/model/*</exclude>
+							<!-- The following is just to avoid the instrumentation error
+							when running htmlunit due to the
+							class StyleAttributes$Definition (method too large) -->
+							<exclude>com/gargoylesoftware/**</exclude>
 						</excludes>
 					</configuration>
 					<executions>				        	
@@ -407,6 +417,19 @@
 					<plugin>
 						<groupId>org.pitest</groupId>
 						<artifactId>pitest-maven</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		
+		<profile>
+			<id>jacoco</id>
+			<build>
+				<plugins>
+					<plugin>
+						<!-- Configurato in pluginManagment -->
+						<groupId>org.jacoco</groupId>
+						<artifactId>jacoco-maven-plugin</artifactId>
 					</plugin>
 				</plugins>
 			</build>

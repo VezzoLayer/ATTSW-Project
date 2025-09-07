@@ -8,7 +8,8 @@ import io.cucumber.junit.CucumberOptions;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(features = "src/bdd/resources", glue = "com.book.bookmanager.steps", monochrome = true)
+@CucumberOptions(features = "src/bdd/resources", glue = "com.book.bookmanager.steps", monochrome = true, plugin = {
+		"pretty", "html:target/cucumber/cucumber-report.html", "json:target/cucumber/cucumber.json" })
 public class BookWebAppBDD {
 
 	@BeforeClass
