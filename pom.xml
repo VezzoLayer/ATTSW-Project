@@ -67,10 +67,10 @@
 		<sonar.issue.ignore.multicriteria>e11,e12</sonar.issue.ignore.multicriteria>
 		<!-- Disabilita "Database passwords should not be disclosed" -->
 		<sonar.issue.ignore.multicriteria.e11.ruleKey>secrets:S6703</sonar.issue.ignore.multicriteria.e11.ruleKey>
-		<sonar.issue.ignore.multicriteria.e11.resourceKey>**/application.properties</sonar.issue.ignore.multicriteria.e11.resourceKey>
+		<sonar.issue.ignore.multicriteria.e11.resourceKey>**/application*</sonar.issue.ignore.multicriteria.e11.resourceKey>
 		<!-- Disabilita "Credentials should not be hard-coded" -->
 		<sonar.issue.ignore.multicriteria.e12.ruleKey>java:S6437</sonar.issue.ignore.multicriteria.e12.ruleKey>
-		<sonar.issue.ignore.multicriteria.e12.resourceKey>**/application.properties</sonar.issue.ignore.multicriteria.e12.resourceKey>
+		<sonar.issue.ignore.multicriteria.e12.resourceKey>**/application*</sonar.issue.ignore.multicriteria.e12.resourceKey>
 	</properties>
 	
 	<dependencies>
