@@ -1,0 +1,9 @@
+# Configurazione Postgresql
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/bookdb
+    username: bookuser
+    password: bookpass
+  jpa:
+    hibernate:
+      ddl-auto: create-drop

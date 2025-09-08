@@ -137,6 +137,16 @@
 		    <scope>runtime</scope>
 		</dependency>
 		<dependency>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mariadb.jdbc</groupId>
+			<artifactId>mariadb-java-client</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
 			<groupId>io.rest-assured</groupId>
 			<artifactId>spring-mock-mvc</artifactId>
 			<scope>test</scope>
@@ -199,10 +209,6 @@
 
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
@@ -421,7 +427,7 @@
 				</plugins>
 			</build>
 		</profile>
-		
+
 		<profile>
 			<id>jacoco</id>
 			<build>
@@ -434,7 +440,7 @@
 				</plugins>
 			</build>
 		</profile>
-		
+
 		<!-- Profilo che lega l'esecuzione di jacoco e coveralls perché coveralls richiede i report di jacoco -->
 		<profile>
 			<id>coveralls</id>
@@ -461,7 +467,7 @@
 				</plugins>
 			</build>
 		</profile>
-		
+
 		<!-- Profilo per l'esecuzione solitaria degli e2e test usando BDD con cucumber -->
 		<profile>
 			<id>e2e-tests</id>
@@ -512,7 +518,11 @@
 								<configuration>
 									<arguments>
 										<argument>--server.port=${tomcat.http.port}</argument>
+										<argument>--spring.profiles.active=postgresql</argument>
 									</arguments>
+									<jvmArguments>
+										-Dspring.docker.compose.file=compose-postgresql.yml
+									</jvmArguments>
 								</configuration>
 							</execution>
 							<execution>
